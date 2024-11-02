@@ -1,5 +1,9 @@
 import express from "express";
-import { createNewUser, getUserByEmail } from "../model/user/userModel.js";
+import {
+  createNewUser,
+  deleteUserById,
+  getUserByEmail,
+} from "../model/user/userModel.js";
 
 const router = express.Router();
 
@@ -66,5 +70,19 @@ router.post("/signin", async (req, res) => {
       status: "error",
       message: "Invalid login details",
     });
+});
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await deleteUserById(id);
+  if (result.length > 0) {
+    const deleteUser = result[0];
+    if (deleteUser.id) {
+      res.json({
+        status: "success",
+        message: "Successfully deleted the track",
+        user: deleteUser,
+      });
+    }
+  }
 });
 export default router;

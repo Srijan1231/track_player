@@ -1,5 +1,9 @@
 import { query } from "../../helper/dbPool.js";
-
+import pg from "pg";
+const { Pool } = pg;
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL,
+});
 export const createUserTable = async () => {
   const sql = `
      CREATE TABLE IF NOT EXISTS users(
@@ -65,15 +69,16 @@ export const updateUserById = async (object) => {
     return error.stack;
   }
 };
-export const deleteAdminById = async (id) => {
+export const deleteUserById = async (id) => {
   const sql = `DELETE FROM users WHERE id = $1`; // `id` is used as the primary key
+
   const values = [id];
 
   try {
     const res = await query(sql, values);
     return res.rowCount; // Returns the number of rows deleted
   } catch (error) {
-    console.log("Error from deleteAdminById", error);
+    console.log("Error from deleteUserById", error);
     return error.stack;
   }
 };

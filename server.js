@@ -6,6 +6,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { db } from "./db/db.js";
 import userRouter from "./routes/userRouter.js";
+import trackRouter from "./routes/trackRouter.js";
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(cors());
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
+app.use("/track", trackRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
