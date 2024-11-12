@@ -28,7 +28,7 @@ export const addNewTrack = async (track) => {
     const res = await query(sql, values);
     return res.rows;
   } catch (error) {
-    throw new Error("Cannot add new track", error);
+    console.log("Cannot add new track", error.message);
   }
 };
 

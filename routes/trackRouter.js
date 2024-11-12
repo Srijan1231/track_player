@@ -26,11 +26,12 @@ const upload = multer({ storage });
 
 router.get("/:user_id", async (req, res) => {
   const { user_id } = req.params;
+
   const response = await getTracksByUserId(user_id);
   try {
     if (response.length > 0) {
       res.json({
-        status: "Success",
+        status: "success",
         message: "Here are the track added by user",
         tracks: response,
       });
@@ -51,15 +52,18 @@ router.post("/", upload.array("mp3", 1), async (req, res) => {
     }
 
     const result = await addNewTrack(req.body);
+
     if (result.length > 0) {
       const newTrack = result[0];
-      res.json({
+      return res.json({
         status: "success",
         message: "New Track has been added",
         track: newTrack,
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("error while adding track", error);
+  }
 });
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;

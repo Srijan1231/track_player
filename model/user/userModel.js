@@ -29,6 +29,8 @@ export const createUserTable = async () => {
 };
 
 export const createNewUser = async (user) => {
+  await createUserTable();
+
   const { fName, lName, phone, address, email, password } = user;
   const sql = `INSERT INTO users(fName, lName, phone, address, email, password)
    VALUES($1,$2,$3,$4,$5,$6) 
@@ -38,7 +40,7 @@ export const createNewUser = async (user) => {
     const res = await query(sql, values);
     return res.rows;
   } catch (error) {
-    console.error("Error inserting admin:", error);
+    console.error("Error inserting user:", error);
     throw error;
   }
 };

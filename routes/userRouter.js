@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
     ) {
       error.statusCode = 400;
       error.message =
-        "This email is already used by another Admin, Use different email or reset your password";
+        "This email is already used by another User, Use different email or reset your password";
     }
   }
 });
